@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}
+Perfil - GameHub
+{% endblock %}
+
+{% block content %}
+
+<h1>👤 Meu Perfil</h1>
+
+<h2>{{ current_user.username }}</h2>
+
+<p>
+    <strong>Email:</strong>
+    {{ current_user.email }}
+</p>
+
+<hr>
+
+<h3>📝 Minha Bio</h3>
+
+{% if current_user.bio %}
+    <p>{{ current_user.bio }}</p>
+{% else %}
+    <p>Você ainda não possui uma bio.</p>
+{% endif %}
+
+<hr>
+
+<h3>✏️ Editar Bio</h3>
+
+<form method="POST">
+
+    <textarea
+        name="bio"
+        rows="5"
+        cols="40"
+        placeholder="Fale um pouco sobre você..."
+    >{{ current_user.bio or "" }}</textarea>
+
+    <br><br>
+
+    <button type="submit">
+        Salvar Bio
+    </button>
+
+</form>
+
+<hr>
+
+<h3>🎮 Minha Biblioteca</h3>
+
+<p>Você ainda não possui jogos na biblioteca.</p>
+
+{% endblock %}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}GameHub{% endblock %}</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <header>
+
+        <nav>
+
+            <a href="{{ url_for('main.home') }}">
+                🎮 GameHub
+            </a>
+
+            <a href="{{ url_for('main.games') }}">
+                Jogos
+            </a>
+
+            {% if current_user.is_authenticated %}
+               <a href="{{ url_for('main.library') }}">
+                  📚 Biblioteca
+                </a>
+                <a href="{{ url_for('main.profile') }}">
+                    Perfil
+                </a>
+
+                <a href="{{ url_for('main.logout') }}">
+                    Sair
+                </a>
+
+            {% else %}
+
+                <a href="{{ url_for('main.login') }}">
+                    Login
+                </a>
+
+                <a href="{{ url_for('main.register') }}">
+                    Criar conta
+                </a>
+
+            {% endif %}
+
+        </nav>
+
+    </header>
+
+
+    <main>
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+</body>
+
+</html>

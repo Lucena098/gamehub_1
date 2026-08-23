@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}
+Criar conta - GameHub
+{% endblock %}
+
+{% block content %}
+
+<h1>🎮 Criar conta</h1>
+
+<form method="POST">
+
+    <label>Nome de usuário:</label>
+    <input type="text" name="username" required>
+
+    <br><br>
+
+    <label>Email:</label>
+    <input type="email" name="email" required>
+
+    <br><br>
+
+    <label>Senha:</label>
+    <input type="password" name="password" required>
+
+    <br><br>
+
+    <button type="submit">
+        Criar conta
+    </button>
+
+</form>
+
+<br>
+
+<a href="{{ url_for('main.login') }}">
+    Já tenho uma conta
+</a>
+
+{% endblock %}
