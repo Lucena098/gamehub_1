@@ -2,8 +2,16 @@ from app import db
 from flask_login import UserMixin
 
 
+# ==========================================
+# USUÁRIO
+# ==========================================
+
 class User(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
 
     username = db.Column(
         db.String(80),
@@ -30,8 +38,17 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return f"<User {self.username}>"
 
+
+# ==========================================
+# JOGO
+# ==========================================
+
 class Game(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
 
     title = db.Column(
         db.String(150),
@@ -65,8 +82,18 @@ class Game(db.Model):
 
     def __repr__(self):
         return f"<Game {self.title}>"
+
+
+# ==========================================
+# BIBLIOTECA
+# ==========================================
+
 class Library(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
 
     user_id = db.Column(
         db.Integer,
@@ -88,13 +115,76 @@ class Library(db.Model):
 
     user = db.relationship(
         "User",
-        backref=db.backref("library", lazy=True)
+        backref=db.backref(
+            "library",
+            lazy=True
+        )
     )
 
     game = db.relationship(
         "Game",
-        backref=db.backref("players", lazy=True)
+        backref=db.backref(
+            "players",
+            lazy=True
+        )
     )
 
     def __repr__(self):
-        return f"<Library User:{self.user_id} Game:{self.game_id}>"
+        return (
+            f"<Library "
+            f"User:{self.user_id} "
+            f"Game:{self.game_id}>"
+        )
+
+
+# ==========================================
+# AVALIAÇÃO
+# ==========================================
+
+class Review(db.Model):
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey("user.id"),
+        nullable=False
+    )
+
+    game_id = db.Column(
+        db.Integer,
+        db.ForeignKey("game.id"),
+        nullable=False
+    )
+
+    rating = db.Column(
+        db.Integer,
+        nullable=False
+    )
+
+    comment = db.Column(
+        db.Text,
+        nullable=True
+    )
+
+    user = db.relationship(
+        "User",
+        backref=db.backref(
+            "reviews",
+            lazy=True
+        )
+    )
+
+    game = db.relationship(
+        "Game",
+        backref=db.backref(
+            "reviews",
+            lazy=True
+        )
+    )
+
+    def __repr__(self):
+        return f"<Review {self.rating}/5>"
